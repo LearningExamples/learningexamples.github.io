@@ -15,7 +15,8 @@
 # in the templates via {{ site.myvariable }}.
 title: Learning with Examples
 description: A collection of examples to help you learn and understand various concepts.
-theme: just-the-docs
+remote_theme: just-the-docs/just-the-docs
+source: docs
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://learningexamples.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 repository: LearningExamples/learning-examples.github.io
