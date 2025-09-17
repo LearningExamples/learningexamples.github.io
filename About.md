@@ -1,6 +1,7 @@
 ---
 title: About
 nav_order: 9
+layout: default
 ---
 
 # About
