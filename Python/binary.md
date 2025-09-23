@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Python Basics - From Input to Conditionals
+title: Python Basics - Data Types
 parent: Python
 nav_order: 4
 ---
