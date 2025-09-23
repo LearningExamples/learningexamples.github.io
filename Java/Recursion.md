@@ -218,3 +218,79 @@ In this example:
   * The logic is **recursive**, breaking the problem of searching a list into checking the first element and then solving the smaller problem of searching the *rest* of the list.
 
 By mastering generics and recursion, you unlock the ability to write more abstract, reusable, and elegant solutions in Java. Happy coding\!
+
+
+
+### Homework
+
+
+Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands. 
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+
+```java
+
+public class NumberOfIslandsWithVisited {
+	
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) {
+            return 0;
+        }
+        
+        int m = grid.length;
+        int n = grid[0].length;
+        boolean[][] visited = new boolean[m][n];
+        int count = 0 ;
+        
+     // Traverse each cell  and not visited, start DFS
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+            	if (grid[i][j] == '1' && !visited[i][j]) {
+            		count++;
+            		dfs(grid, visited, i,j);
+            	}
+            	
+           }
+        }
+        
+        return count;
+    }
+
+    // Recursive DFS using visited
+    private void dfs(char[][] grid, boolean[][] visited, int i, int j) {
+        // Out of bounds or water or already visited
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length 
+            || grid[i][j] == '0' || visited[i][j]) {
+            return;
+        }
+        
+        // Mark current cell as visited
+        visited[i][j] = true;
+    
+        // Recursive 
+        // Explore neighbors (up, down, left, right)
+        dfs(grid, visited, i + 1, j);
+        dfs(grid, visited, i - 1, j);
+        dfs(grid, visited, i, j + 1);
+        dfs(grid, visited, i, j - 1);   
+    
+    }
+
+	
+	// Example usage
+    public static void main(String[] args) {
+        NumberOfIslandsWithVisited solution = new NumberOfIslandsWithVisited();
+        char[][] grid = {
+            {'1','1','0','0','0'},
+            {'1','1','0','0','0'},
+            {'0','0','1','0','0'},
+            {'0','0','0','1','1'}
+        };
+        
+        System.out.println("Number of islands: " + solution.numIslands(grid));
+    }
+
+}
+
+
+```
