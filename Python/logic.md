@@ -1,5 +1,5 @@
 ---
-title: 'Making Decisions in Python: A Guide to Conditional Logic'
+title: Making Decisions in Python
 parent: Python
 nav_order: 5
 ---
