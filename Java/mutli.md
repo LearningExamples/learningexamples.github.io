@@ -182,5 +182,165 @@ Multi-threading is a powerful feature for building high-performance, responsive 
   * A thread progresses through a lifecycle of states (NEW, RUNNABLE, WAITING, TERMINATED).
   * The `synchronized` keyword is essential for preventing race conditions when multiple threads share data.
 
+
+
+
+---
+# Example of Single vs Multi thread
+
+
+## 1️⃣ Single-threaded Example
+
+```java
+public class SingleThreadExample {
+    public static void main(String[] args) {
+        long start = System.currentTimeMillis(); // Start timer
+
+        // Task 1
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Task 1 - Count: " + i);
+            try {
+                Thread.sleep(500); // simulate work
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Task 2
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Task 2 - Count: " + i);
+            try {
+                Thread.sleep(500); // simulate work
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        long end = System.currentTimeMillis(); // End timer
+        System.out.println("Single-threaded total time: " + (end - start) + " ms");
+    }
+}
+```
+
+📌 **Output order is sequential**.
+👉 Expected total time: **≈ 5000 ms (5 sec)**
+
+---
+
+## 2️⃣ Multi-threaded Example (Extending `Thread`)
+
+```java
+class MyTask extends Thread {
+    private String taskName;
+
+    public MyTask(String taskName) {
+        this.taskName = taskName;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(taskName + " - Count: " + i);
+            try {
+                Thread.sleep(500); // simulate work
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+public class MultiThreadExample {
+    public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+
+        MyTask task1 = new MyTask("Task 1");
+        MyTask task2 = new MyTask("Task 2");
+
+        task1.start();
+        task2.start();
+
+        try {
+            task1.join(); // wait for Task 1
+            task2.join(); // wait for Task 2
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("Multi-threaded (Thread) total time: " + (end - start) + " ms");
+    }
+}
+```
+
+📌 **Output is interleaved** because both threads run concurrently.
+👉 Expected total time: **≈ 2500 ms (2.5 sec)**
+
+---
+
+## 3️⃣ Multi-threaded Example (ExecutorService - Thread Pool)
+
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+class Worker implements Runnable {
+    private String taskName;
+
+    public Worker(String taskName) {
+        this.taskName = taskName;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(taskName + " - Count: " + i);
+            try {
+                Thread.sleep(500); // simulate work
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+public class ExecutorServiceExample {
+    public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        executor.execute(new Worker("Task 1"));
+        executor.execute(new Worker("Task 2"));
+
+        executor.shutdown();
+        while (!executor.isTerminated()) {
+            // wait until all tasks finish
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("Multi-threaded (ExecutorService) total time: " + (end - start) + " ms");
+    }
+}
+```
+
+📌 **ExecutorService** manages threads for you (more scalable).
+👉 Expected total time: **≈ 2500 ms (2.5 sec)**
+
+---
+
+## ⚖️ Comparison
+
+| Approach                      | Execution  | Output Order | Total Time |
+| ----------------------------- | ---------- | ------------ | ---------- |
+| Single-threaded               | Sequential | Predictable  | \~5000 ms  |
+| Multi-thread (Thread class)   | Concurrent | Mixed        | \~2500 ms  |
+| ExecutorService (Thread Pool) | Concurrent | Mixed        | \~2500 ms  |
+
+
+
+
+
+---
 This is just the beginning\! The `java.util.concurrent` package offers more advanced tools like Executors, Locks, and thread-safe collections to make concurrent programming even more powerful and manageable. Happy coding\!
 
