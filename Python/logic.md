@@ -349,6 +349,58 @@ Found the item ('C', 3) in the dictionary.
 
 -----
 
+
+
+
+Before diving into loops, it helps to understand how Python compares objects and assigns values conditionally.
+
+### Example: Identity vs Equality
+```python
+a = [1, 2, 3]
+b = a
+c = [1, 2, 3]
+
+print(f"Is a the same object as b? {a is b}")
+print(f"Is a the same object as c? {a is c}")
+print(f"Is a equal to c? {a == c}")
+
+print(hex(id(a)))
+print(hex(id(b)))
+print(hex(id(c)))
+````
+
+**Output:**
+
+```
+Is a the same object as b? True
+Is a the same object as c? False
+Is a equal to c? True
+0x7f8c3dfe94c0
+0x7f8c3dfe94c0
+0x7f8c3dfe9a00
+```
+
+---
+
+### Example: Conditional Assignment
+
+```python
+# conditional value assignment
+my_number = 6
+your_number = (my_number - 1) if (my_number >= 6) else (my_number + 1)
+print(your_number)
+
+# student grade
+grade = int(input("Enter your grade: "))
+# transferring it into letters
+my_grade = "A" if (grade >= 90) else "B" if (grade >= 80) else "C" if (grade >= 70) else "D" if (grade >= 60) else "F"
+print("My grade in letters is:", my_grade)
+```
+
+---
+
+
+
 ## Conclusion
 
 Great job\! 🚀 You've just covered some of the most important concepts in Python: using conditional logic with `if`, `elif`, and `else` to make your programs intelligent. You've also learned how to build powerful conditions with comparison, logical, and membership operators.
