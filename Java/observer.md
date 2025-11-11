@@ -3,7 +3,7 @@ layout: default
 title: Observer Pattern
 parent: Java
 nav_order: 8
----
+--- 
 ## 📰 What is the Observer Pattern?
 
 The **Observer Pattern** is a behavioral design pattern that defines a one-to-many dependency between objects. When one object (the **Subject**) changes its state, all its dependents (the **Observers**) are notified and updated automatically.
